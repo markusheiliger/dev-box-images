@@ -10,16 +10,13 @@ variable "commit" {
   description = "The commit to use for the build"
 }
 
-variable "galleryName" {
-  type        = string
-  default     = ""
-  description = "The name of the gallery to use for the build"
-}
-
-variable "galleryResourceGroup" {
-  type        = string
-  default     = ""
-  description = "The resource group to use for the managed image"
+variable "gallery" {
+  type = object({
+    name          = string
+    resourceGroup = string
+    subscription  = string
+  })
+  description = "The azure compute gallery to publish the image"
 }
 
 variable "name" {
@@ -32,12 +29,6 @@ variable "replicaLocations" {
   type        = list(string)
   default     = []
   description = "The locations to replicate the image to"
-}
-
-variable "resolvedResourceGroup" {
-  type        = string
-  default     = ""
-  description = ""
 }
 
 variable "location" {
@@ -83,4 +74,26 @@ variable "repos" {
   }))
   default     = []
   description = "The repositories to clone on the image"
+}
+
+variable "keyVault" {
+  type        = string
+  default     = ""
+  description = "Specify an existing key vault to use for uploading certificates to the instance to connect."
+}
+
+variable "virtualNetwork" {
+  type        = string
+  default     = ""
+  description = "Use a pre-existing virtual network for the VM"
+}
+
+variable "virtualNetworkSubnet" {
+  type    = string
+  default = ""
+}
+
+variable "virtualNetworkResourceGroup" {
+  type    = string
+  default = ""
 }

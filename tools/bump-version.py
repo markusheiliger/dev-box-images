@@ -1,3 +1,8 @@
+# ------------------------------------
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+# ------------------------------------
+
 import argparse
 import os
 from pathlib import Path
@@ -20,7 +25,8 @@ if major and minor:
 images = args.images
 allimages = not images
 
-imgspath = Path(Path.cwd() / 'images')
+toolspath = Path(__file__).resolve().parent
+imgspath = Path(toolspath.parent / 'images')
 
 paths = []
 

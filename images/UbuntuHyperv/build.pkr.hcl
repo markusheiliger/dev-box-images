@@ -104,16 +104,24 @@ build {
       "${path.root}/../../scripts/Install-GitHubDesktop.ps1",
       "${path.root}/../../scripts/Install-VSCode.ps1",
       "${path.root}/../../scripts/Install-AzureCLI.ps1",
-      "${path.root}/../../scripts/Install-VS2022.ps1"
+      "${path.root}/../../scripts/Enable-Hyperv.ps1"
     ]
   }
+  
+  provisioner "windows-restart" {
+    # needed to get elevated script execution working
+    restart_timeout = "30m"
+    pause_before    = "2m"
+  }
 
-  // this doesn't work yet
-  // provisioner "powershell" {
-  //   elevated_user     = build.User
-  //   elevated_password = build.Password
-  //   scripts           = [for r in var.repos : "${path.root}/../../scripts/Clone-Repo.ps1 -Url '${r.url}' -Secret '${r.secret}'"]
-  // }
+  provisioner "powershell" {
+    elevated_user     = build.User
+    elevated_password = build.Password
+    scripts = [
+      "${path.root}/../../scripts/HyperV/Create-Ubuntu-VM.ps1"
+    ]
+  }
+  
 
   provisioner "powershell" {
     scripts = [
